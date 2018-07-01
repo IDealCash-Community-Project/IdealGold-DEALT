@@ -1,6 +1,6 @@
 IdealGold (DEALT) 2018
 ----------------------------------------------------------
-Building idealgold
+Building idealgold (DEALT)
 
 See doc/readme-qt.rst for instructions on building idealgold QT,
 the intended-for-end-users, nice-graphical-interface, reference
