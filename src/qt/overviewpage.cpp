@@ -11,6 +11,8 @@
 
 #include <QAbstractItemDelegate>
 #include <QPainter>
+#include <QApplication>
+#include <QDesktopWidget>
 
 #define DECORATION_SIZE 64
 #define NUM_ITEMS 3
@@ -45,7 +47,8 @@ public:
         bool confirmed = index.data(TransactionTableModel::ConfirmedRole).toBool();
         QVariant value = index.data(Qt::ForegroundRole);
         QColor foreground = option.palette.color(QPalette::Text);
-        if(qVariantCanConvert<QColor>(value))
+        //if(qVariantCanConvert<QColor>(value))
+        if(value.canConvert(QMetaType::QColor))
         {
             foreground = qvariant_cast<QColor>(value);
         }
@@ -100,6 +103,15 @@ OverviewPage::OverviewPage(QWidget *parent) :
     filter(0)
 {
     ui->setupUi(this);
+    //adding android size code
+//            QFont font;
+//            font.setFamily(font.defaultFamily());
+//            QRect rec = QApplication::desktop()->screenGeometry();
+//            int fS=std::max(7,(int)rec.width()/80);
+//            font.setPointSize(fS);
+//            this->setFont(font);
+//            this->setFixedWidth((int)rec.width());
+//            this->setFixedHeight((int)(rec.height()*0.8));
 
     // Recent transactions
     ui->listTransactions->setItemDelegate(txdelegate);

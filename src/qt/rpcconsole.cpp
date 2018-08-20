@@ -12,6 +12,7 @@
 #include <QKeyEvent>
 #include <QUrl>
 #include <QScrollBar>
+#include <QDesktopWidget>
 
 #include <openssl/crypto.h>
 
@@ -191,9 +192,19 @@ RPCConsole::RPCConsole(QWidget *parent) :
     historyPtr(0)
 {
     ui->setupUi(this);
+    //adding android size code
+            QFont font;
+            font.setFamily(font.defaultFamily());
+            QRect rec = QApplication::desktop()->screenGeometry();
+            int fS=std::max(7,(int)rec.width()/80);
+            font.setPointSize(fS);
+            this->setFont(font);
+            this->setFixedWidth((int)rec.width());
+            this->setFixedHeight((int)(rec.height()*0.8));
 
 #ifndef Q_OS_MAC
     ui->openDebugLogfileButton->setIcon(QIcon(":/icons/export"));
+    ui->openConfigurationfileButton->setIcon(QIcon(":/icons/export"));
     ui->showCLOptionsButton->setIcon(QIcon(":/icons/options"));
 #endif
 
@@ -289,6 +300,8 @@ static QString categoryClass(int category)
 void RPCConsole::clear()
 {
     ui->messagesWidget->clear();
+    history.clear();
+    historyPtr = 0;
     ui->lineEdit->clear();
     ui->lineEdit->setFocus();
 
@@ -422,6 +435,11 @@ void RPCConsole::on_tabWidget_currentChanged(int index)
 void RPCConsole::on_openDebugLogfileButton_clicked()
 {
     GUIUtil::openDebugLogfile();
+}
+
+void RPCConsole::on_openConfigurationfileButton_clicked()
+{
+    GUIUtil::openConfigfile();
 }
 
 void RPCConsole::scrollToEnd()
